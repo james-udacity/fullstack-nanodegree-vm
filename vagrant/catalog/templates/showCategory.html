@@ -1,0 +1,11 @@
+{% extends "base.html"%}
+
+{% block content %}
+<div id="itemList">
+  <h2>{{category.get('name')}}</h2>
+  <!-- Get Items -->
+  {% for i in items %}
+    <a href="">Item</a><br>
+  {% endfor %}
+</div>
+{% endblock %}

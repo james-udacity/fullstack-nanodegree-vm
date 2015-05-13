@@ -12,27 +12,38 @@ categories = ["Soccer", "Basketball", "Baseball", "Frisbee", "Snowboarding"\
 class DAO():
     def __init__(self, filename="./catalog_blitz.db"):
         self.backend = FileBackend(filename)
-        # Check to see if the categories have been initialized
+        # Check to see if the db has no categories, if so
+        # Populate it
         result = self.backend.filter(Category, {})
         if result.__len__() == 0:
-            print "Empty db"
+            for category_name in categories:
+                self.backend.save(Category({'name':category_name}))
+                self.backend.commit()
 
-    def createCategories():
-        
+
+    def serialize(self, obj):
         pass
 
+    def getCategories(self):
+        return self.backend.filter(Category, {})
+
+    def getItemsInCategory(self, category):
+        pass
+
+    def getCategory(self, category_name):
+        category = self.backend.get(Category, {'name':category_name})
+        print category
+        return category
     # Items
 
-    def createItem():
+    def createItem(self, item):
         pass
 
-    def readItem():
+    def readItem(self, item):
         pass
 
-    def updateItem():
+    def updateItem(self, item):
         pass
 
-    def deleteItem():
+    def deleteItem(self, item):
         pass
-        
-    

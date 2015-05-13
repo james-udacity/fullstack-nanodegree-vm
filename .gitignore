@@ -1,0 +1,3 @@
+*.pyc
+vagrant/.vagrant/machines/*
+vagrant/catalog/catalog_blitz.db/
