@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Catalog App Index</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  </head>
-  <body>
-
-
-
-
-    <script src="https://login.persona.org/include.js"></script>
-  </body>
-</html>
+{% extends "base.html"%}
+{% block content %}
+Latest items here
+<ul>
+{% for i in items %}
+  <li><a href={{"/catalog/"+i.get('title')}}>{{i.get('title')}}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

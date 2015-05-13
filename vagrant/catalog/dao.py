@@ -27,6 +27,10 @@ class DAO():
     def getCategories(self):
         return self.backend.filter(Category, {})
 
+    def getItems(self):
+        ## Sort this by timestamp later
+        return self.backend.filter(Item, {})
+
     def getItemsInCategory(self, category):
         pass
 
@@ -34,10 +38,16 @@ class DAO():
         category = self.backend.get(Category, {'name':category_name})
         print category
         return category
+
+    def getItemByName(self, item_name):
+        item = self.backend.get(Item, {'title':item_name})
+        return item
     # Items
 
     def createItem(self, item):
-        pass
+        result = self.backend.save(item)
+        self.backend.commit()
+        return result
 
     def readItem(self, item):
         pass

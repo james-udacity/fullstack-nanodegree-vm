@@ -16,6 +16,7 @@ apt-get -qqy install mongo-org
 
 # Install Blitz DB
 pip install blitzdb
+pip install flask-wtf
 pip install flask-blitzdb
 
 vagrantTip="[35m[1mThe shared directory is located at /vagrant\nTo access your shared files: cd /vagrant(B[m"
