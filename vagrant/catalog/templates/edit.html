@@ -1,4 +1,4 @@
-{% extends "base.html"%}
+{% extends "bare.html"%}
 {% block content %}
 <h3>Edit Item</h3>
 <form name="editItem" method="post">
@@ -11,9 +11,12 @@
   {{ form.description}}<br/><br/>
 
   {{ form.category.label }} <br/>
-  {{ form.category}}<br/><br/>
+  <div class="input-field col s12">
+  {{ form.category(class_='browser-default')}}<br/><br/>
+</div>
 
-  {{ form.submit }}
+  <button class="btn waves-effect waves-light" type="submit" name="action">Save Changes
+    </button>
 </form>
 
 {% endblock %}
