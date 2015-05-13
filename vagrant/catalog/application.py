@@ -46,16 +46,24 @@ def createItem():
 @app.route("/catalog/<category>/<item_name>")
 def showItem(category, item_name):
     item = dao.getItemByName(item_name)
-    return render_template('show.html', item=item)
+    return render_template('show.html', item=item, category_name=category)
 
-@app.route("/catalog/<category>/<item>/edit", methods=['GET', 'POST'])
-def editItem(category, item):
+@app.route("/catalog/<category_name>/<item_name>/edit", methods=['GET', 'POST'])
+def editItem(category_name, item_name):
     if request.method == 'GET':
-        return render_template('edit.html', item)
+        form = CreateItemForm()
+        form.category.choices = [(g.get('pk'), g.get('name')) for g in cats]
+        item = dao.getItemByName(item_name)
+        form.category.process_data(item.get('cat_id'))
+        form.title.process_data(item.get('title'))
+        form.description.process_data(item.get('description'))
+        return render_template('edit.html', form=form)
+    else:
+        return 'do stuff'
 
-@app.route("/catalog/<category>/<item>/delete", methods=['POST'])
-def deleteItem(category, item):
-    return "Stuff"
+@app.route("/catalog/<category_name>/<item_name>/delete", methods=['GET','POST'])
+def deleteItem(category_name, item_name):
+    return render_template('delete.html')
 
 if __name__ == "__main__":
     app.debug = True

@@ -1,18 +1,19 @@
-{% extends "base.html"}
+{% extends "base.html"%}
 {% block content %}
 <h3>Edit Item</h3>
-<form>
-  <label for="title">Title</label>
-  <input type="text" id="title"/>
+<form name="editItem" method="post">
+  {{ form.hidden_tag()}}
 
-  <label for="description">Description</label>
-  <textarea id="description"/>
+  {{ form.title.label}} <br/>
+  {{ form.title}}<br/><br/>
 
-  <label for="category">Category</label>
-  <option></option>
+  {{ form.description.label }} <br/>
+  {{ form.description}}<br/><br/>
 
-  <button id="submit">Submit</button>
+  {{ form.category.label }} <br/>
+  {{ form.category}}<br/><br/>
 
+  {{ form.submit }}
 </form>
 
 {% endblock %}

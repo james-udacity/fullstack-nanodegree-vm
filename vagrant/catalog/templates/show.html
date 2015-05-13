@@ -5,5 +5,7 @@
   <span>Description: {{item.get("description")}}</span>
 </div>
 
+<a href="/catalog/{{category_name}}/{{item.get("title")}}/edit">Edit</a> |
+<a href="/catalog/{{category_name}}/{{item.get("title")}}/delete">Delete</a>
 <!-- Edit / Delete -->
 {% endblock %}
