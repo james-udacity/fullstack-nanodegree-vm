@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, url_for
 from dao import DAO, Item
-from forms import CreateItemForm
+from forms import CreateItemForm, DeleteForm
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -12,6 +12,7 @@ print "hello"
 
 
 @app.route("/")
+@app.route("/catalog")
 def index():
     items = dao.getItems()
     print items
@@ -27,7 +28,8 @@ def showCategory(category_name):
     category = dao.getCategory(category_name)
     if request.method == 'GET':
         items = dao.getItemsInCategory(category)
-        return render_template('showCategory.html', category=category, categories=cats)
+        print items.__len__()
+        return render_template('showCategory.html', category=category, categories=cats, items=items)
 
 @app.route("/catalog/items/create", methods=['POST', 'GET'])
 def createItem():
@@ -39,7 +41,7 @@ def createItem():
         f = request.form
         item = Item({'cat_id':f['category'], 'description':f['description'],\
             'title':f['title']})
-        print dao.createItem(item)
+        dao.createItem(item)
         return "fff"
 
 
@@ -63,7 +65,14 @@ def editItem(category_name, item_name):
 
 @app.route("/catalog/<category_name>/<item_name>/delete", methods=['GET','POST'])
 def deleteItem(category_name, item_name):
-    return render_template('delete.html')
+    if request.method == 'GET':
+        form = DeleteForm()
+        return render_template('delete.html', form=form)
+    else:
+        if request.form['btnYes'] is not None:
+            dao.deleteItem(item_name)
+        print request.form
+        return "dfd"
 
 if __name__ == "__main__":
     app.debug = True

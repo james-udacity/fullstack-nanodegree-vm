@@ -12,9 +12,10 @@
   {{ form.description}}<br/><br/>
 
   {{ form.category.label }} <br/>
-  {{ form.category}}<br/><br/>
-
-  {{ form.submit}}
-</form>
+  <div class="input-field col s12">
+  {{ form.category(class_='browser-default')}}<br/><br/>
+</div>
+<button class="btn waves-effect waves-light" type="submit" name="action">Create
+  </button></form>
 
 {% endblock %}

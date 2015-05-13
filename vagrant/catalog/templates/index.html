@@ -1,9 +1,15 @@
 {% extends "base.html"%}
 {% block content %}
-Latest items here
-<ul>
-{% for i in items %}
-  <li><a href={{"/catalog/"+i.get('title')}}>{{i.get('title')}}</a></li>
-{% endfor %}
-</ul>
+<div class="col s12 m6">
+  <div class="card blue lighten-4">
+    <div class="card-content white-text">
+      <a href="">Add Item</a><br/>
+      <span class="card-title">Latest Items</span><br/>
+        <!-- Get Items -->
+        {% for i in items %}
+          <a href="">{{i.get('title')}}</a><br>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -32,7 +32,7 @@ class DAO():
         return self.backend.filter(Item, {})
 
     def getItemsInCategory(self, category):
-        pass
+        return self.backend.filter(Item, {'cat_id':category.get('pk')})
 
     def getCategory(self, category_name):
         category = self.backend.get(Category, {'name':category_name})
@@ -55,5 +55,7 @@ class DAO():
     def updateItem(self, item):
         pass
 
-    def deleteItem(self, item):
-        pass
+    def deleteItem(self, item_name):
+        item = self.getItemByName(item_name)
+        self.backend.delete(item)
+        self.backend.commit()
