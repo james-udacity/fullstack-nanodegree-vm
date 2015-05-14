@@ -1,6 +1,17 @@
-<h3>Delete Item</h3>
-<form method="post">
-  Are you sure you want to delete?<br/>
-  {{ form.btnYes }}
-  {{ form.btnCancel }}
-</form>
+{% extends "bare.html"%}
+{% block content %}
+<div class="col s12 m6">
+  <div class="card indigo lighten-4">
+    <div class="card-content white-text">
+      <span class="card-title">Delete Item</span>
+      <form method="post">
+        Are you sure you want to delete?<br/><br/>
+        <button class="btn waves-effect waves-light" type="submit" name="btnYes">Confirm
+          </button>
+        <button class="btn waves-effect waves-light red" id="btnCancel" type="submit" name="btnCancel">Cancel
+            </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

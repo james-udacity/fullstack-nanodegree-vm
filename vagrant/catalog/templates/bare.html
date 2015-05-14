@@ -16,6 +16,15 @@
   </div>
 </nav>
     <div class="container">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
         <div id="content">{% block content %}{% endblock %}</div>
     </div>
     <script src="https://login.persona.org/include.js"></script>

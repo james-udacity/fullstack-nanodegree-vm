@@ -4,10 +4,10 @@
 <div class="col s12 m6">
   <div class="card indigo lighten-4">
     <div class="card-content white-text">
-      <span class="card-title">{{category.get('name')}} {{items.__len__()}} item(s)</span><br/>
+      <span class="card-title">{{category.get('name')}} {{items.count()}} item(s)</span><br/>
         <!-- Get Items -->
         {% for i in items %}
-          <a href="">{{i.get('title')}}</a><br>
+          <a href="/catalog/{{category['name']}}/{{i['title']}}">{{i['title']}}</a><br>
         {% endfor %}
       </div>
     </div>

@@ -7,7 +7,7 @@
       <span class="card-title">Latest Items</span><br/>
         <!-- Get Items -->
         {% for i in items %}
-          <a href="">{{i.get('title')}}</a><br>
+          <a href="/catalog/{{i['category_name']}}/{{i['title']}}">{{i['title']}}</a><br>
         {% endfor %}
       </div>
     </div>

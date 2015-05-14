@@ -8,15 +8,23 @@
   </head>
   <body>
     <nav>
-  <div class="nav-wrapper">
-    <a href="#" class="brand-logo">Catalog App</a>
+  <div class="nav-wrapper">&nbsp;&nbsp;
+    <a href="/" class="brand-logo">Catalog App</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
       <li><a href="sass.html">Login</a></li>
     </ul>
   </div>
 </nav>
     <div class="container">
-
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
 
       <div class="row">
         <div class="col s12 m4">

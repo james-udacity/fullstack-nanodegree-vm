@@ -4,6 +4,8 @@
 <form name="editItem" method="post">
   {{ form.hidden_tag()}}
 
+  <input type="hidden" name="_objectId" value="{{ form._objectId }}">
+
   {{ form.title.label}} <br/>
   {{ form.title}}<br/><br/>
 
