@@ -10,6 +10,15 @@ dao = DAO()
 cats = dao.getCategories()
 print "hello"
 
+@app.route("/login", methods=['POST'])
+def login():
+    print request
+    return ""
+
+@app.route("/logout", methods=['POST'])
+def logout():
+    print request
+    return ""
 
 @app.route("/")
 @app.route("/catalog")

@@ -8,10 +8,10 @@
   </head>
   <body>
     <nav>
-  <div class="nav-wrapper">
-    <a href="#" class="brand-logo">Catalog App</a>
+  <div class="nav-wrapper">&nbsp;&nbsp;
+    <a href="/" class="brand-logo">Catalog App</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="sass.html">Login</a></li>
+      <li id="signin"><a id="signin" href="#">Login</a></li>
     </ul>
   </div>
 </nav>
@@ -21,5 +21,52 @@
     <script src="https://login.persona.org/include.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>
+    <script>
+      var signinLink = document.getElementById('signin');
+      if (signinLink) {
+        signinLink.onclick = function() { navigator.id.request(); };
+      }
+
+      var signoutLink = document.getElementById('signout');
+      if (signoutLink) {
+        signoutLink.onclick = function() { navigator.id.logout(); };
+      }
+      var currentUser = 'bob@example.com';
+
+      navigator.id.watch({
+        loggedInUser: currentUser,
+        onlogin: function(assertion) {
+          // A user has logged in! Here you need to:
+          // 1. Send the assertion to your backend for verification and to create a session.
+          // 2. Update your UI.
+          $.ajax({ /* <-- This example uses jQuery, but you can use whatever you'd like */
+            type: 'POST',
+            url: '/login', // This is a URL on your website.
+            data: {assertion: assertion},
+            success: function(res, status, xhr) {
+              alert("logged in");
+            },
+            error: function(xhr, status, err) {
+              navigator.id.logout();
+              alert("Login failure: " + err);
+            }
+          });
+        },
+        onlogout: function() {
+          // A user has logged out! Here you need to:
+          // Tear down the user's session by redirecting the user or making a call to your backend.
+          // Also, make sure loggedInUser will get set to null on the next page load.
+          // (That's a literal JavaScript null. Not false, 0, or undefined. null.)
+          $.ajax({
+            type: 'POST',
+            url: '/logout', // This is a URL on your website.
+            success: function(res, status, xhr) {
+              alert("Logged out");
+            },
+            error: function(xhr, status, err) { alert("Logout failure: " + err); }
+          });
+        }
+      });
+    </script>
   </body>
 </html>
