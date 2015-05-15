@@ -6,6 +6,8 @@ The item catalog uses Mozilla Persona for authentication and authorization.
 
 Any email account that can receive an email can be used with this service.
 
+BEFORE the first run, make sure to populate the database by running `python initalize_db.py`.
+
 After starting the server by executing `python /vagrant/catalog/application.py`
 
  - Hit the login button and go through the flow.
