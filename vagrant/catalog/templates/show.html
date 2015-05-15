@@ -4,8 +4,11 @@
   <h3>{{item.get("title")}}</h3>
   <span>Description: {{item.get("description")}}</span>
 </div>
+<br/><br/>
 
-<a href="/catalog/{{category_name}}/{{item.get("title")}}/edit">Edit</a> |
-<a href="/catalog/{{category_name}}/{{item.get("title")}}/delete">Delete</a>
+{% if session.get('email') != None %}
+  <a href="/catalog/{{category_name}}/{{item.get("title")}}/edit">Edit</a> |
+  <a href="/catalog/{{category_name}}/{{item.get("title")}}/delete">Delete</a>
+{% endif %}
 <!-- Edit / Delete -->
 {% endblock %}

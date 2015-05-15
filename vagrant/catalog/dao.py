@@ -43,6 +43,7 @@ class DAO():
         return items
 
     def getItemsInCategory(self, category):
+        print category
         items = self.items.find({"cat_id": str(category['_id'])})
         return items
 

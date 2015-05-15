@@ -11,7 +11,9 @@
   <div class="nav-wrapper">&nbsp;&nbsp;
     <a href="/" class="brand-logo">Catalog App</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="sass.html">Login</a></li>
+      <li><span id="message"></span></li>
+      <li id="signin"><a href="#">Login</a></li>
+      <li id="signout" style="display:none;"><a href="#">Logout</a></li>
     </ul>
   </div>
 </nav>
@@ -48,5 +50,6 @@
     <script src="https://login.persona.org/include.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/materialize.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/persona.js')}}"></script>
   </body>
 </html>

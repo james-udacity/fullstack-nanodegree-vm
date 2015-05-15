@@ -3,7 +3,9 @@
 <div class="col s12 m6">
   <div class="card blue lighten-4">
     <div class="card-content white-text">
+      {% if session.get('email') != None %}
       <a href="/catalog/items/create">Add Item</a><br/>
+      {% endif %}
       <span class="card-title">Latest Items</span><br/>
         <!-- Get Items -->
         {% for i in items %}
