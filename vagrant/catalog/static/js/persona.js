@@ -1,5 +1,3 @@
-
-
 var signinLink = document.getElementById('signin');
 if (signinLink) {
   signinLink.onclick = function() { navigator.id.request(); };
@@ -14,22 +12,7 @@ if (signoutLink) {
     location.reload();
   };
 }
-var currentUser = '';
-
-var toggleLoggedInState = function(session) {
-  // Toggle from logged in state to logged out
-  if ((session == null || session.email == null) && sessionStorage['email'] == null) {
-    document.querySelector('#message').innerText = "";
-    document.querySelector('#signin').style.display = "block";
-    document.querySelector('#signout').style.display = "none";
-  } else {
-    // Toggle to logged in
-    var text = "Logged in as "+ sessionStorage['email'];
-    document.querySelector('#message').innerText = text;
-    document.querySelector('#signin').style.display = "none";
-    document.querySelector('#signout').style.display = "block";
-  }
-}
+var currentUser = "";
 
 navigator.id.watch({
   loggedInUser: currentUser,
@@ -43,11 +26,10 @@ navigator.id.watch({
       data: {assertion: assertion},
       dataType: 'json',
       success: function(res, status, xhr) {
-        sessionStorage['email'] = res.email;
         location.reload();
       },
       error: function(xhr, status, err) {
-        sessionStorage.clear();
+        //sessionStorage.clear();
         navigator.id.logout();
         alert("Login failure: " + err);
       }
@@ -67,4 +49,3 @@ navigator.id.watch({
     });
   }
 });
-$(document).ready(toggleLoggedInState(null));

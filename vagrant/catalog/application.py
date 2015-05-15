@@ -39,9 +39,13 @@ def login():
 
 @app.route("/logout", methods=['POST', 'GET'])
 def logout():
-    # Clear the session
-    #session.clear()
-    return ""
+    if request.method == 'GET':
+        # Clear the session
+        flash("Logged out.")
+        session.clear()
+        return redirect(url_for('index'))
+    else:
+        return ""
 
 @app.route("/")
 @app.route("/catalog")

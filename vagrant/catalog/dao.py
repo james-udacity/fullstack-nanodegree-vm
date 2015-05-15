@@ -22,17 +22,33 @@ class DAO():
                 self.categories.insert_one({'name':category_name})
 
 
+    # Constructs JSON object per rubric
     def toJSON(self):
-        cats = self.categories.find()
-        items = self.items.find()
-        print(dumps(items))
-        return dumps(cats)
+        json = []
+        categories = self.categories.find()
+        for cat in categories:
+            tempJson = {}
+            tempJson['id'] = str(cat['_id'])
+            tempJson['name'] = cat['name']
+            items = self.getItemsInCategory(cat)
+            list = []
+            for item in items:
+                i = {
+                    'cat_id':tempJson['id'],
+                    'id': str(item['_id']),
+                    'description': item['description'],
+                    'title': item['title']
+                }
+                list.append(i)
+            if len(list) > 0:
+                tempJson['Item'] = list
+            json.append(tempJson)
+        return dumps({'Category': json})
 
     def getCategories(self):
         return self.categories.find()
 
     def getItems(self):
-        ## Sort this by timestamp later
         items = []
         cats = self.getCategories()
         for category in cats:

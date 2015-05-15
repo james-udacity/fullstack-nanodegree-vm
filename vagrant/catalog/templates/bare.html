@@ -1,22 +1,40 @@
 <!DOCTYPE>
 <html>
   <head>
-    <title>XXX</title>
+    <title>Catalog</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css')}}"  media="screen,projection"/>
-
   </head>
   <body>
     <nav>
-  <div class="nav-wrapper">&nbsp;&nbsp;
-    <a href="/" class="brand-logo">Catalog App</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><span id="message"></span></li>
-      <li id="signin"><a href="#">Login</a></li>
-      <li id="signout" style="display:none;"><a href="#">Logout</a></li>
-    </ul>
-  </div>
-</nav>
+      <div class="nav-wrapper">&nbsp;&nbsp;
+        <a href="/" class="brand-logo">Catalog App</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li>
+            <span id="message">
+              {% if session.get('email') != None %}
+                Logged in as {{session.get('email')}}
+              {% endif %}
+            </span>
+          </li>
+
+          <li id="signin" style=
+          {% if session.get('email') != None %}
+            "display:none;"
+          {% else %}
+            "display:block;"
+          {% endif %}
+          ><a href="#">Login</a></li>
+          <li id="signout" style=
+          {% if session.get('email') != None %}
+            "display:block;"
+          {% else %}
+            "display:none;"
+          {% endif %}
+          ><a href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
     <div class="container">
       {% with messages = get_flashed_messages() %}
         {% if messages %}
