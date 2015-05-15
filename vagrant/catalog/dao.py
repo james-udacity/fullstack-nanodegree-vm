@@ -2,11 +2,11 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from bson.json_util import dumps
 
-categories = ["Soccer", "Basketball", "Baseball", "Frisbee", "Snowboarding",\
+categories = ["Soccer", "Basketball", "Baseball", "Frisbee", "Snowboarding",
               "Rock Climbing", "Foosball", "Skating", "Hockey"]
 
 class DAO():
-    def __init__(self, filename="./catalog_blitz.db"):
+    def __init__(self):
         self.client = MongoClient()
         self.db = self.client['catalog']
 
@@ -19,8 +19,7 @@ class DAO():
         result = self.categories.find_one()
         if result == None:
             for category_name in categories:
-                self.categories.insert_one({'name':category_name})
-
+                self.categories.insert_one({'name': category_name})
 
     # Constructs JSON object per rubric
     def toJSON(self):
@@ -34,7 +33,7 @@ class DAO():
             list = []
             for item in items:
                 i = {
-                    'cat_id':tempJson['id'],
+                    'cat_id': tempJson['id'],
                     'id': str(item['_id']),
                     'description': item['description'],
                     'title': item['title']
@@ -64,11 +63,11 @@ class DAO():
         return items
 
     def getCategory(self, category_name):
-        category = self.categories.find_one({"name":category_name})
+        category = self.categories.find_one({"name": category_name})
         return category
 
     def getItemByName(self, item_name):
-        item = self.items.find_one({'title':item_name})
+        item = self.items.find_one({'title': item_name})
         return item
 
     # Items
@@ -76,7 +75,6 @@ class DAO():
     def createItem(self, item):
         result = self.items.insert_one(item)
         return result.inserted_id
-
 
     def readItem(self, item):
         pass
@@ -87,4 +85,4 @@ class DAO():
     def deleteItem(self, item_name):
         item = self.getItemByName(item_name)
         if item is not None:
-            self.items.delete_one({'_id':item['_id']})
+            self.items.delete_one({'_id': item['_id']})

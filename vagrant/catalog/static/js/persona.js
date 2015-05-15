@@ -12,7 +12,7 @@ if (signoutLink) {
     location.reload();
   };
 }
-var currentUser = "";
+
 
 navigator.id.watch({
   loggedInUser: currentUser,

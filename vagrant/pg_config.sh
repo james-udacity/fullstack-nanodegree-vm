@@ -19,10 +19,8 @@ sudo apt-get update
 
 apt-get -qqy install mongodb-server
 
-# Install Blitz DB
-pip install blitzdb
+# Install Pymongo and forms
 pip install flask-wtf
-pip install flask-blitzdb
 pip install pymongo
 
 vagrantTip="[35m[1mThe shared directory is located at /vagrant\nTo access your shared files: cd /vagrant(B[m"

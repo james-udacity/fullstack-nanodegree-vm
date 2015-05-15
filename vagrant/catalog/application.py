@@ -14,20 +14,20 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 app.session_interface = MongoSessionInterface(db='catalog')
 app.secret_key = '\xf3\xab\xbe\xa0{\xc9\xcc\x892]_H\xc7\xd2}*\x10\xf7\xa0\x8eI\xa0\xc3H'
-
+methods = ['GET', 'POST']
 dao = DAO()
 
 def checkACL():
     if (session.get('email') == None):
-        flash("You aren't authorized to create, edit, or delete items."\
-         " Please sign in.")
+        flash("You aren't authorized to create, edit, or delete items."
+              " Please sign in.")
         return None
     return True
 
 @app.route("/login", methods=['POST'])
 def login():
     assertion = request.form['assertion']
-    payload = {'assertion': assertion, 'audience':'http://localhost:5000'}
+    payload = {'assertion': assertion, 'audience': 'http://localhost:8080'}
     r = requests.post('https://verifier.login.persona.org/verify', \
         data=payload)
     result = json.loads(r.text)
@@ -52,7 +52,8 @@ def logout():
 def index():
     cats = dao.getCategories()
     items = dao.getItems()
-    return render_template('index.html', categories=cats, items=items, session=session)
+    return render_template('index.html', categories=cats,
+                            items=items, session=session)
 
 @app.route("/catalog.json")
 def catalogJSON():
@@ -85,16 +86,17 @@ def createItem():
         return redirect(url_for('index'))
 
 def formToRecord(f):
-    item = {'cat_id':f['category'], 'description':f['description'],\
-        'title':f['title'], 'timestamp':datetime.datetime.utcnow()}
+    item = {'cat_id':f['category'], 'description':f['description'],
+            'title': f['title'], 'timestamp': datetime.datetime.utcnow()}
     return item
 
 @app.route("/catalog/<category>/<item_name>")
 def showItem(category, item_name):
     item = dao.getItemByName(item_name)
-    return render_template('show.html', item=item, category_name=category,session=session)
+    return render_template('show.html', item=item,
+                            category_name=category,session=session)
 
-@app.route("/catalog/<category_name>/<item_name>/edit", methods=['GET', 'POST'])
+@app.route("/catalog/<category_name>/<item_name>/edit", methods=methods)
 def editItem(category_name, item_name):
     # Check the session
     if checkACL() is None: return redirect(url_for('index'))
@@ -115,10 +117,11 @@ def editItem(category_name, item_name):
         flash('Item ' + item['title'] + " updated.")
         return redirect(url_for('index'))
 
-@app.route("/catalog/<category_name>/<item_name>/delete", methods=['GET','POST'])
+@app.route("/catalog/<category_name>/<item_name>/delete", methods=methods)
 def deleteItem(category_name, item_name):
     # Check the session
-    if checkACL() is None: return redirect(url_for('index'))
+    if checkACL() is None:
+        return redirect(url_for('index'))
     if request.method == 'GET':
         form = DeleteForm()
         return render_template('delete.html', form=form, session=session)
@@ -130,4 +133,4 @@ def deleteItem(category_name, item_name):
 
 if __name__ == "__main__":
     app.debug = True
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=8080)
