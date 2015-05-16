@@ -93,6 +93,7 @@ def create_item():
 
 
 def form_to_record(f):
+    """Converts a form object into a dict that can be persisted."""
     item = {'cat_id': f['category'], 'description': f['description'],
             'title': f['title'], 'timestamp': datetime.datetime.utcnow()}
     return item
