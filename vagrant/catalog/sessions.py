@@ -1,4 +1,4 @@
-# From http://flask.pocoo.org/snippets/110/
+# Copied as is from http://flask.pocoo.org/snippets/110/
 
 from uuid import uuid4
 from datetime import datetime, timedelta

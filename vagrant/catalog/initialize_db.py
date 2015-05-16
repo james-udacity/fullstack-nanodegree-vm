@@ -27,3 +27,6 @@ with open('itemlist.csv', 'rb') as csvfile:
                 category = categories.find_one({'name': category_name})
             items.insert_one({'title': row[1], 'description': row[2],
                               'cat_id': str(category['_id'])})
+
+# Close connection to DB
+client.close()
