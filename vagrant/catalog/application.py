@@ -28,6 +28,7 @@ def check_acl():
 
 @app.route("/login", methods=['POST'])
 def login():
+    """ Handles login via Mozilla Persona."""
     assertion = request.form['assertion']
     payload = {'assertion': assertion, 'audience': 'http://localhost:8080'}
     req = requests.post('https://verifier.login.persona.org/verify',
@@ -42,6 +43,11 @@ def login():
 
 @app.route("/logout", methods=METHODS)
 def logout():
+    """Logs out the user.
+    Due to a quirk in Persona which would constantly log out the user,
+    it only responds to GET requests,
+    and ignores POSTs that the webpage might send.
+    """
     if request.method == 'GET':
         # Clear the session
         flash("Logged out.")
@@ -54,6 +60,7 @@ def logout():
 @app.route("/")
 @app.route("/catalog")
 def index():
+    """Displays the index page with all categories and items."""
     cats = dao.get_categories()
     items = dao.get_items()
     return render_template('index.html', categories=cats,
@@ -62,12 +69,14 @@ def index():
 
 @app.route("/catalog.json")
 def catalog_json():
+    """Returns the JSON for the item catalog"""
     return dao.to_json()
 
 
 @app.route("/catalog/<category_name>")
 @app.route("/catalog/<category_name>/items")
 def show_category(category_name):
+    """Shows all the items in a given category."""
     cats = dao.get_categories()
     category = dao.get_category(category_name)
     items = dao.get_items_in_category(category)
@@ -77,6 +86,12 @@ def show_category(category_name):
 
 @app.route("/catalog/items/create", methods=METHODS)
 def create_item():
+    """Depending on the request method, it shows a blank form or
+    saves an item to the database.
+
+    If there isn't a valid session present,
+    the user is redirected to the index page.
+    """
     if check_acl() is None:
         return redirect(url_for('index'))
     if request.method == 'GET':
@@ -93,7 +108,8 @@ def create_item():
 
 
 def form_to_record(f):
-    """Converts a form object into a dict that can be persisted."""
+    """Converts a CreateItemForm object into a dict that can be persisted.
+    """
     item = {'cat_id': f['category'], 'description': f['description'],
             'title': f['title'], 'timestamp': datetime.datetime.utcnow()}
     return item
@@ -101,6 +117,7 @@ def form_to_record(f):
 
 @app.route("/catalog/<category>/<item_name>")
 def show_item(category, item_name):
+    """Shows an item given an item name."""
     item = dao.get_item_by_name(item_name)
     return render_template('show.html', item=item,
                            category_name=category, session=session)
@@ -108,7 +125,13 @@ def show_item(category, item_name):
 
 @app.route("/catalog/<category_name>/<item_name>/edit", methods=METHODS)
 def edit_item(category_name, item_name):
-    # Check the session
+    """Depending on the request method, it shows a form prepopulated with
+    the data of the item the user wants to edit, or executes code to
+    update the item in the database.
+
+    If there isn't a valid session present,
+    the user is redirected to the index page.
+    """
     if check_acl() is None:
         return redirect(url_for('index'))
     if request.method == 'GET':
@@ -131,6 +154,13 @@ def edit_item(category_name, item_name):
 
 @app.route("/catalog/<category_name>/<item_name>/delete", methods=METHODS)
 def delete_item(category_name, item_name):
+    """Depending on the request method, it asks for confirmation that the
+    user would like to delete the current item, or executes code to
+    delete the item in the database.
+
+    If there isn't a valid session present,
+    the user is redirected to the index page.
+    """
     # Check the session
     if check_acl() is None:
         return redirect(url_for('index'))
