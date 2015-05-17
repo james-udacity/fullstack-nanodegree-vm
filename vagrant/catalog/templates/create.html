@@ -2,7 +2,7 @@
 {% block content %}
 <h3>Create Item</h3>
 
-<form name="createItem" method="post" action="{{url_for('createItem')}}" enctype="application/x-www-form-urlencoded">
+<form name="createItem" method="post" action="{{url_for('create_item')}}" enctype="application/x-www-form-urlencoded">
   {{ form.hidden_tag()}}
 
   {{ form.title.label}} <br/>

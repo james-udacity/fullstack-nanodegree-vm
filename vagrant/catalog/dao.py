@@ -39,7 +39,7 @@ class DAO(object):
                     'title': item['title']
                 }
                 temp_items.append(i)
-            if len(list) > 0:
+            if len(temp_items) > 0:
                 temp_json['Item'] = temp_items
             json.append(temp_json)
         return jsonify({'Category': json})

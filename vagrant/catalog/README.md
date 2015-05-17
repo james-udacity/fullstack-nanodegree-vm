@@ -5,9 +5,9 @@ Project 3 for Full-Stack Nanodegree
 The item catalog uses Mozilla Persona for authentication and authorization.
 
 Any email account that can receive an email can be used with this service.
-
-BEFORE the first run, make sure to populate the database by running `python initalize_db.py`.
 MongoDB is already installed in the Vagrant image, start it by executing `sudo mongod &`
+Make sure to do that before running the next line.
+BEFORE the first run, make sure to populate the database by running `python initalize_db.py`.
 That tells the MongoDB Server to run until explicitly stopped.
 
 And starting the server by executing `python /vagrant/catalog/application.py`
