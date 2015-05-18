@@ -1,4 +1,8 @@
 *.pyc
 vagrant/.vagrant/machines/*
 vagrant/catalog/catalog_blitz.db/
-vagrant/tournament/bin/activate
+vagrant/tournament/bin/*
+vagrant/tournament/lib/*
+vagrant/.idea/*
+.idea/*
+fullstack-nanodegree-vm.iml
